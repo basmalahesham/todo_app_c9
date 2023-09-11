@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/layout/widgets/show_add_task_bottom_sheet.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/moduls/settings/settings_view.dart';
 import 'package:todo_app/moduls/tasks_list/tasks_list_view.dart';
 
 class HomeLayoutView extends StatefulWidget {
-
   static const String routeName = 'home_layout';
 
   const HomeLayoutView({super.key});
@@ -14,6 +14,7 @@ class HomeLayoutView extends StatefulWidget {
 }
 
 class _HomeLayoutViewState extends State<HomeLayoutView> {
+  DateTime selectedDate = DateTime.now();
   int selectedIndex = 0;
   List<Widget> screens = [
     const TasksListView(),
@@ -41,7 +42,9 @@ class _HomeLayoutViewState extends State<HomeLayoutView> {
           color: Colors.white,
         ),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            ShowAddTasksBottomSheet();
+          },
           tooltip: 'Increment',
           child: const Icon(Icons.add),
         ),
@@ -58,11 +61,26 @@ class _HomeLayoutViewState extends State<HomeLayoutView> {
             });
           },
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.menu),label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.settings),label: "settings"),
+            BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: "settings"),
           ],
         ),
       ),
+    );
+  }
+
+  ShowAddTasksBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      //isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      builder: (context) => AddTaskBottomSheet(),
     );
   }
 }
