@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/layout/widgets/show_add_task_bottom_sheet.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/moduls/settings/settings_view.dart';
 import 'package:todo_app/moduls/tasks_list/tasks_list_view.dart';
+
+import '../provider/settings_provider.dart';
 
 class HomeLayoutView extends StatefulWidget {
   static const String routeName = 'home_layout';
@@ -23,6 +26,7 @@ class _HomeLayoutViewState extends State<HomeLayoutView> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<SettingsProvider>(context);
     return Scaffold(
       body: screens[selectedIndex],
       /*appBar: AppBar(
@@ -51,6 +55,7 @@ class _HomeLayoutViewState extends State<HomeLayoutView> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
+        color: provider.isDark() ? Color(0xFF141922) : Colors.white,
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
         child: BottomNavigationBar(

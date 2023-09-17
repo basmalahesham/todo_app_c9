@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/moduls/settings/theme_bottom_sheet.dart';
 
 import '../../core/theme/app_theme.dart';
+import '../../provider/settings_provider.dart';
+import 'language_bottom_sheet.dart';
 
-class SettingsView extends StatelessWidget {
+class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
 
   @override
+  State<SettingsView> createState() => _SettingsViewState();
+}
+
+class _SettingsViewState extends State<SettingsView> {
+  @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<SettingsProvider>(context);
     var mediaQuery = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -18,12 +29,8 @@ class SettingsView extends StatelessWidget {
           height: mediaQuery.height * 0.15,
           color: AppTheme.primaryColor,
           child: Text(
-            'Settings',
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              color: Colors.white,
-            ),
+            AppLocalizations.of(context)!.settings,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
         Center(
@@ -36,16 +43,14 @@ class SettingsView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Language',
+                  AppLocalizations.of(context)!.language,
                   textAlign: TextAlign.start,
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Colors.black,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    showLanguageBottomSheet();
+                  },
                   child: Container(
                     margin: const EdgeInsets.only(
                       top: 20,
@@ -56,13 +61,17 @@ class SettingsView extends StatelessWidget {
                         horizontal: 12, vertical: 10),
                     height: 55,
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: provider.isDark()
+                            ? Color(0xFF141922)
+                            : Colors.white,
                         border: Border.all(color: AppTheme.primaryColor)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'English',
+                          provider.currentLocal == 'en'
+                              ? AppLocalizations.of(context)!.english
+                              : AppLocalizations.of(context)!.arabic,
                           style: GoogleFonts.roboto(
                             fontWeight: FontWeight.normal,
                             fontSize: 14,
@@ -81,16 +90,14 @@ class SettingsView extends StatelessWidget {
                   height: 30,
                 ),
                 Text(
-                  'Mode',
+                  AppLocalizations.of(context)!.mode,
                   textAlign: TextAlign.start,
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Colors.black,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    showThemeBottomSheet();
+                  },
                   child: Container(
                     margin: const EdgeInsets.only(
                       top: 20,
@@ -101,13 +108,17 @@ class SettingsView extends StatelessWidget {
                         horizontal: 12, vertical: 10),
                     height: 55,
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: provider.isDark()
+                            ? Color(0xFF141922)
+                            : Colors.white,
                         border: Border.all(color: AppTheme.primaryColor)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Light',
+                          provider.isDark()
+                              ? AppLocalizations.of(context)!.dark
+                              : AppLocalizations.of(context)!.light,
                           style: GoogleFonts.roboto(
                             fontWeight: FontWeight.normal,
                             fontSize: 14,
@@ -127,6 +138,32 @@ class SettingsView extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  void showThemeBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      builder: (context) => ThemeBottomSheet(),
+    );
+  }
+
+  void showLanguageBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      builder: (context) => LanguageBottomSheet(),
     );
   }
 }

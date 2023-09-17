@@ -1,86 +1,139 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/core/network_layer/firestore_utils.dart';
+import 'package:todo_app/models/task_model.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../../provider/settings_provider.dart';
 
 class TaskItemWidget extends StatelessWidget {
-  const TaskItemWidget({super.key});
+  final TaskModel model;
+
+  // final String title;
+  // final String description;
+  const TaskItemWidget({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<SettingsProvider>(context);
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 8,
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 20,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 5,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.red,
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 4,
-            height: 80,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: AppTheme.primaryColor,
+      child: Slidable(
+        startActionPane: ActionPane(
+          extentRatio: 0.2,
+          motion: DrawerMotion(),
+          children: [
+            SlidableAction(
+              borderRadius: BorderRadius.circular(15),
+              onPressed: (context) {
+                FirestoreUtils.deleteData(model);
+              },
+              backgroundColor: Color(0xFFFE4A49),
+              foregroundColor: Colors.white,
+              icon: Icons.delete,
+              label: 'Delete',
             ),
+          ],
+        ),
+        child: Container(
+          // margin: const EdgeInsets.symmetric(
+          //   horizontal: 15,
+          //   vertical: 8,
+          // ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 25,
+            vertical: 20,
           ),
-          const SizedBox(
-            width: 25,
+          decoration: BoxDecoration(
+            color: provider.isDark() ? Color(0xFF141922) : Colors.white,
+            borderRadius: BorderRadius.circular(15),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                'Play basket ball',
-                style: GoogleFonts.poppins(
+              Container(
+                width: 4,
+                height: 80,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
                   color: AppTheme.primaryColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Row(
+              const SizedBox(
+                width: 25,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.timer_outlined,
-                    size: 20,
+                  Text(
+                    model.title ?? '',
+                    style: GoogleFonts.poppins(
+                      color: AppTheme.primaryColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(
-                    width: 4,
+                    height: 5,
                   ),
                   Text(
-                    '10:30 am',
-                    style: GoogleFonts.roboto(
+                    model.description ?? '',
+                    style: GoogleFonts.poppins(
                       color: Colors.black,
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
                     ),
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.timer_outlined,
+                        size: 20,
+                        color: provider.isDark() ? Colors.white : Colors.black,
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(
+                        model.dateTime.toString(),
+                        style: GoogleFonts.roboto(
+                          color:
+                              provider.isDark() ? Colors.white : Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
+              Spacer(),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: AppTheme.primaryColor,
+                ),
+                child: Icon(
+                  Icons.check,
+                  size: 40,
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
-          Spacer(),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20,),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: AppTheme.primaryColor,
-            ),
-            child: Icon(
-              Icons.check,
-              size: 40,
-              color: Colors.white,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -1,0 +1,10 @@
+{
+  "settings": "Settings",
+  "mode": "Mode",
+  "dark": "Dark",
+  "light": "Light",
+  "language": "Language",
+  "english": "English",
+  "arabic": "Arabic",
+  "todolist": "To Do List"
+}
