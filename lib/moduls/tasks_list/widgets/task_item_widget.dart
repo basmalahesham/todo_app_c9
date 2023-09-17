@@ -88,7 +88,7 @@ class TaskItemWidget extends StatelessWidget {
                   Text(
                     model.description ?? '',
                     style: GoogleFonts.poppins(
-                      color: Colors.black,
+                      color: provider.isDark() ? Colors.white : Colors.black,
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
                     ),

@@ -30,7 +30,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       child: Form(
         key: formKey,
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 28.0),
+          padding: const EdgeInsets.only(bottom: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -43,7 +43,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 ),
               ),
               const SizedBox(
-                height: 15,
+                height: 10,
               ),
               Text(
                 "Title",
@@ -89,7 +89,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 ),
               ),
               const SizedBox(
-                height: 15,
+                height: 10,
               ),
               Text(
                 "Description",
@@ -135,7 +135,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               Text(
                 "Select Time",
