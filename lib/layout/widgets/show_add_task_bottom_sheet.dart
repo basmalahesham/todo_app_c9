@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/core/theme/app_theme.dart';
 
 import '../../core/network_layer/firestore_utils.dart';
+import '../../core/services/snackbar_service.dart';
 import '../../models/task_model.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
@@ -60,8 +61,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return "Title can't be empty";
-                  } else if (value.length < 10) {
-                    return "Title must be at least 10 characters";
+                  } else if (value.length < 8) {
+                    return "Title must be at least 8 characters";
                   } else {
                     return null;
                   }
@@ -208,11 +209,11 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         EasyLoading.show();
         await FirestoreUtils.addTask(taskModel);
         EasyLoading.dismiss();
-        //SnackBarService.showSuccessMessage('Task added successfully')
+        SnackBarService.showSuccessMessage('Task added successfully');
         Navigator.pop(context);
       } catch (e) {
         EasyLoading.dismiss();
-        //SnackBarService.showErrorMessage('Task added failed');
+        SnackBarService.showErrorMessage('Task added failed');
         Navigator.pop(context);
       }
     }
