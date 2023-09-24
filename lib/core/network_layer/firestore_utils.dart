@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:todo_app/core/utils/my_date_time.dart';
 import 'package:todo_app/models/task_model.dart';
 
 class FirestoreUtils {
@@ -27,9 +28,13 @@ class FirestoreUtils {
     return tasksList;
   }
 
-  static Stream<QuerySnapshot<TaskModel>> getRealTimeDataFromFirestore() {
-    var querySnapshots = getCollection().snapshots();
-    return querySnapshots;
+  static Stream<QuerySnapshot<TaskModel>> getRealTimeDataFromFirestore(
+      DateTime dateTime) {
+    return getCollection()
+        .where("dateTime",
+            isEqualTo:
+                MyDateTime.externalDateOnly(dateTime).millisecondsSinceEpoch)
+        .snapshots();
   }
 
   static Future<void> deleteData(TaskModel model) {

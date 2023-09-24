@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/core/services/loading_service.dart';
 import 'package:todo_app/core/theme/app_theme.dart';
 import 'package:todo_app/layout/home_layout.dart';
+import 'package:todo_app/moduls/login/login.dart';
+import 'package:todo_app/moduls/register/register_screen.dart';
 import 'package:todo_app/moduls/splach/splash_view.dart';
 import 'package:todo_app/provider/settings_provider.dart';
 
@@ -51,6 +53,8 @@ class MyApp extends StatelessWidget {
       routes: {
         SplashView.routeName: (context) => SplashView(),
         HomeLayoutView.routeName: (context) => const HomeLayoutView(),
+        RegisterScreen.routeName: (context) => RegisterScreen(),
+        LoginScreen.routeName: (context) => LoginScreen(),
       },
       builder: EasyLoading.init(
         builder: BotToastInit(),

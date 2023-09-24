@@ -16,9 +16,11 @@ class TasksListView extends StatefulWidget {
 }
 
 class _TasksListViewState extends State<TasksListView> {
-  /*List<TaskModel> allTasks = [];
+  //List<TaskModel> allTasks = [];
 
-  @override
+  DateTime selectedDate = DateTime.now();
+
+  /*@override
   void initState() {
     loadTask();
     super.initState();
@@ -42,10 +44,13 @@ class _TasksListViewState extends State<TasksListView> {
           ),
         ),
         CalendarTimeline(
-          initialDate: DateTime.now(),
+          initialDate: selectedDate,
           firstDate: DateTime.now().subtract(Duration(days: 30)),
           lastDate: DateTime.now().add(Duration(days: 365)),
-          onDateSelected: (date) => print(date),
+          onDateSelected: (date) {
+            selectedDate = date;
+            setState(() {});
+          },
           leftMargin: 20,
           monthColor: provider.isDark() ? Colors.white : Colors.black,
           dayColor: provider.isDark() ? Colors.white : Colors.black,
@@ -57,7 +62,7 @@ class _TasksListViewState extends State<TasksListView> {
         ),
         Expanded(
           child: StreamBuilder(
-            stream: FirestoreUtils.getRealTimeDataFromFirestore(),
+            stream: FirestoreUtils.getRealTimeDataFromFirestore(selectedDate),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('Error Eccoured');

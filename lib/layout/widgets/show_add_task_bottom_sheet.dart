@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/core/theme/app_theme.dart';
+import 'package:todo_app/core/utils/my_date_time.dart';
 
 import '../../core/network_layer/firestore_utils.dart';
 import '../../core/services/snackbar_service.dart';
@@ -43,8 +44,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   fontSize: 18,
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: mediaQuery.height * 0.02,
               ),
               Text(
                 "Title",
@@ -53,8 +54,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   fontSize: 17,
                 ),
               ),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: mediaQuery.height * 0.01,
               ),
               TextFormField(
                 controller: titleController,
@@ -89,8 +90,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: mediaQuery.height * 0.01,
               ),
               Text(
                 "Description",
@@ -99,8 +100,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   fontSize: 17,
                 ),
               ),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: mediaQuery.height * 0.01,
               ),
               TextFormField(
                 controller: descriptionController,
@@ -135,8 +136,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: mediaQuery.height * 0.01,
               ),
               Text(
                 "Select Time",
@@ -181,6 +182,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   }
 
   selectDateTime() async {
+    // select date
+    // day month year
     var currentDate = await showDatePicker(
       context: context,
       initialDate: selectedDate,
@@ -202,7 +205,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         title: titleController.text,
         description: descriptionController.text,
         isDone: false,
-        dateTime: selectedDate,
+        dateTime: MyDateTime.externalDateOnly(selectedDate),
       );
 
       try {
