@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/moduls/login/login.dart';
+import 'package:todo_app/layout/home_layout.dart';
 
 import '../../provider/settings_provider.dart';
 
@@ -21,7 +21,7 @@ class _SplashViewState extends State<SplashView> {
         seconds: 2,
       ),
       () {
-        Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(HomeLayoutView.routeName);
       },
     );
     super.initState();

@@ -6,5 +6,6 @@
   "language": "اللغة",
   "english": "انجليزى",
   "arabic": "عربي",
-  "todolist": "قائمة تو دو"
+  "todolist": "قائمة تو دو",
+  "editTasks": "تعديل المهام"
 }

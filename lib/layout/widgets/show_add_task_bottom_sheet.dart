@@ -45,7 +45,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 ),
               ),
               SizedBox(
-                height: mediaQuery.height * 0.02,
+                height: mediaQuery.height * 0.001,
               ),
               Text(
                 "Title",
@@ -69,6 +69,11 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   }
                 },
                 decoration: InputDecoration(
+                  /*labelText: 'Title',
+                  labelStyle: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),*/
                   hintText: 'Enter Your Task Title',
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -112,9 +117,14 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     return null;
                   }
                 },
-                minLines: 3,
-                maxLines: 3,
+                minLines: 2,
+                maxLines: 2,
                 decoration: InputDecoration(
+                  /*labelText: 'Description',
+                  labelStyle: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),*/
                   hintText: 'Enter Your Task Description',
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -139,27 +149,31 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               SizedBox(
                 height: mediaQuery.height * 0.01,
               ),
-              Text(
-                "Select Time",
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  selectDateTime();
-                },
-                child: Text(
-                  (DateFormat.yMMMEd().format(selectedDate)),
-                  //"${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    color: AppTheme.primaryColor,
+              Row(
+                children: [
+                  Text(
+                    "Select Time :",
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
                   ),
-                ),
+                  InkWell(
+                    onTap: () {
+                      selectDateTime();
+                    },
+                    child: Text(
+                      (DateFormat.yMMMEd().format(selectedDate)),
+                      //"${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: AppTheme.primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const Spacer(),
               ElevatedButton(

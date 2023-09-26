@@ -42,6 +42,14 @@ class FirestoreUtils {
     return collectionRef.delete();
   }
 
+  static Future<void> isDoneTask(TaskModel model) async {
+    getCollection().doc(model.id).update({'isDone': !model.isDone!});
+  }
+
+  static Future<void> updateTask(TaskModel model) async {
+    getCollection().doc(model.id).update(model.toFireStore());
+  }
+
 // Future<void> updateTask(TaskModel taskModel) async {
 //   await getCollection().doc(taskModel.id).update(taskModel.toFireStore());
 // }
