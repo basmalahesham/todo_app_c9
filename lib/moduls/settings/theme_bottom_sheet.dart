@@ -20,7 +20,7 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: provider.isDark() ? Color(0xFF141922) : Colors.white,
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(12), topRight: Radius.circular(12)),
       ),

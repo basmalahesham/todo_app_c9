@@ -65,7 +65,7 @@ class _EditScreenState extends State<EditScreen> {
             padding: EdgeInsets.all(20),
             height: mediaQuery.height * 0.7,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: provider.isDark() ? Color(0xFF141922) : Colors.white,
               borderRadius: BorderRadius.all(
                 Radius.circular(15),
               ),
@@ -79,6 +79,7 @@ class _EditScreenState extends State<EditScreen> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
+                    color: provider.isDark() ? Colors.white : Colors.black,
                   ),
                 ),
                 SizedBox(
@@ -89,6 +90,7 @@ class _EditScreenState extends State<EditScreen> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
+                    color: provider.isDark() ? Colors.white : Colors.black,
                   ),
                 ),
                 SizedBox(
@@ -116,6 +118,9 @@ class _EditScreenState extends State<EditScreen> {
                   fontSize: 17,
                 ),*/
                     hintText: 'Enter Your Task Title',
+                    hintStyle: TextStyle(
+                      color: provider.isDark() ? Colors.white : Colors.black,
+                    ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
@@ -144,6 +149,7 @@ class _EditScreenState extends State<EditScreen> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
+                    color: provider.isDark() ? Colors.white : Colors.black,
                   ),
                 ),
                 SizedBox(
@@ -171,6 +177,9 @@ class _EditScreenState extends State<EditScreen> {
                   fontSize: 17,
                 ),*/
                     hintText: 'Enter Your Task Description',
+                    hintStyle: TextStyle(
+                      color: provider.isDark() ? Colors.white : Colors.black,
+                    ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
@@ -199,6 +208,7 @@ class _EditScreenState extends State<EditScreen> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
+                    color: provider.isDark() ? Colors.white : Colors.black,
                   ),
                 ),
                 InkWell(
@@ -216,6 +226,28 @@ class _EditScreenState extends State<EditScreen> {
                     ),
                   ),
                 ),
+                /*InkWell(
+                  onTap: () async {
+                    selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.fromMillisecondsSinceEpoch(args.dateTime!),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(Duration(days: 365))) ?? DateTime.now();
+                    setState(() {
+                      args.dateTime = selectedDate.millisecondsSinceEpoch;
+                    });
+                  },
+                  child: Text(
+                    (DateFormat.yMMMEd().format(selectedDate)),
+                    //"${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: AppTheme.primaryColor,
+                    ),
+                  ),
+                ),*/
                 SizedBox(
                   height: mediaQuery.height * 0.08,
                 ),
@@ -224,6 +256,7 @@ class _EditScreenState extends State<EditScreen> {
                     FirestoreUtils.updateTask(args);
                   },
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
@@ -247,10 +280,8 @@ class _EditScreenState extends State<EditScreen> {
   selectDateTime() async {
     // select date
     // day month year
-    var args = ModalRoute.of(context)!.settings.arguments as TaskModel;
     var currentDate = await showDatePicker(
       context: context,
-      //initialDate: DateTime.fromMillisecondsSinceEpoch(args.dateTime!),
       initialDate: selectedDate,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(
@@ -261,8 +292,6 @@ class _EditScreenState extends State<EditScreen> {
       return;
     }
     selectedDate = currentDate;
-    setState(() {
-      //args.dateTime = selectedDate.millisecondsSinceEpoch;
-    });
+    setState(() {});
   }
 }

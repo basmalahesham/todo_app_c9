@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/core/theme/app_theme.dart';
 import 'package:todo_app/layout/widgets/show_add_task_bottom_sheet.dart';
 import 'package:todo_app/moduls/settings/settings_view.dart';
 import 'package:todo_app/moduls/tasks_list/tasks_list_view.dart';
@@ -45,6 +46,7 @@ class _HomeLayoutViewState extends State<HomeLayoutView> {
           color: Colors.white,
         ),
         child: FloatingActionButton(
+          backgroundColor: AppTheme.primaryColor,
           onPressed: () {
             ShowAddTasksBottomSheet();
           },

@@ -4,6 +4,7 @@ class TaskModel {
   String? title;
   String? description;
   bool? isDone;
+  //int? dateTime;
   DateTime? dateTime;
 
   TaskModel(
@@ -15,6 +16,7 @@ class TaskModel {
           title: json['title'],
           description: json['description'],
           isDone: json['isDone'],
+    //dateTime: json['dateTime'],
           dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
         );
 
@@ -24,6 +26,7 @@ class TaskModel {
       'title': title,
       'description': description,
       'isDone': isDone,
+      //'dateTime': dateTime,
       'dateTime': dateTime?.millisecondsSinceEpoch,
     };
   }

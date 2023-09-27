@@ -148,6 +148,7 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: AppTheme.primaryColor,
                       padding: EdgeInsets.symmetric(
                         vertical: 15,
                       ),

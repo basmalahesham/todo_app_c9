@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/core/theme/app_theme.dart';
 import 'package:todo_app/core/widgets/custom_text_form_field.dart';
 import 'package:todo_app/layout/home_layout.dart';
 import 'package:todo_app/moduls/register/register_screen.dart';
@@ -123,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryColor,
                     padding: EdgeInsets.symmetric(
                       vertical: 12,
                     ),
@@ -149,7 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text(
                       'Register',
-                      style: TextStyle(fontSize: 16),
+                      style:
+                          TextStyle(fontSize: 16, color: AppTheme.primaryColor),
                     ),
                   ),
                 ],

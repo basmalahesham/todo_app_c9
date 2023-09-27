@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/core/theme/app_theme.dart';
 import 'package:todo_app/core/utils/my_date_time.dart';
 
 import '../../core/network_layer/firestore_utils.dart';
 import '../../core/services/snackbar_service.dart';
 import '../../models/task_model.dart';
+import '../../provider/settings_provider.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
   const AddTaskBottomSheet({super.key});
@@ -27,168 +29,191 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
-      child: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                "Add New Task",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+    var provider = Provider.of<SettingsProvider>(context);
+    return Container(
+      decoration: BoxDecoration(
+        color: provider.isDark() ? Color(0xFF141922) : Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+        child: Form(
+          key: formKey,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "Add New Task",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: provider.isDark() ? Colors.white : Colors.black,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: mediaQuery.height * 0.001,
-              ),
-              Text(
-                "Title",
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
+                SizedBox(
+                  height: mediaQuery.height * 0.001,
                 ),
-              ),
-              SizedBox(
-                height: mediaQuery.height * 0.01,
-              ),
-              TextFormField(
-                controller: titleController,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return "Title can't be empty";
-                  } else if (value.length < 8) {
-                    return "Title must be at least 8 characters";
-                  } else {
-                    return null;
-                  }
-                },
-                decoration: InputDecoration(
-                  /*labelText: 'Title',
-                  labelStyle: GoogleFonts.poppins(
+                Text(
+                  "Title",
+                  style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
-                  ),*/
-                  hintText: 'Enter Your Task Title',
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: Colors.red,
-                    ),
+                    color: provider.isDark() ? Colors.white : Colors.black,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: mediaQuery.height * 0.01,
-              ),
-              Text(
-                "Description",
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
+                SizedBox(
+                  height: mediaQuery.height * 0.001,
                 ),
-              ),
-              SizedBox(
-                height: mediaQuery.height * 0.01,
-              ),
-              TextFormField(
-                controller: descriptionController,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return "Description can't be empty";
-                  } else {
-                    return null;
-                  }
-                },
-                minLines: 2,
-                maxLines: 2,
-                decoration: InputDecoration(
-                  /*labelText: 'Description',
-                  labelStyle: GoogleFonts.poppins(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),*/
-                  hintText: 'Enter Your Task Description',
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: mediaQuery.height * 0.01,
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Select Time :",
-                    style: GoogleFonts.poppins(
+                TextFormField(
+                  controller: titleController,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Title can't be empty";
+                    } else if (value.length < 8) {
+                      return "Title must be at least 8 characters";
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                    /*labelText: 'Title',
+                    labelStyle: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
+                    ),*/
+                    hintText: 'Enter Your Task Title',
+                    hintStyle: TextStyle(
+                      color: provider.isDark() ? Colors.white : Colors.black,
                     ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      selectDateTime();
-                    },
-                    child: Text(
-                      (DateFormat.yMMMEd().format(selectedDate)),
-                      //"${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: AppTheme.primaryColor,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.red,
                       ),
                     ),
                   ),
-                ],
-              ),
-              const Spacer(),
-              ElevatedButton(
-                onPressed: () {
-                  addTask();
-                },
-                child: Text(
-                  "Add Task",
+                ),
+                SizedBox(
+                  height: mediaQuery.height * 0.01,
+                ),
+                Text(
+                  "Description",
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 17,
+                    color: provider.isDark() ? Colors.white : Colors.black,
                   ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: mediaQuery.height * 0.001,
+                ),
+                TextFormField(
+                  controller: descriptionController,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Description can't be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  minLines: 2,
+                  maxLines: 2,
+                  decoration: InputDecoration(
+                    /*labelText: 'Description',
+                    labelStyle: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),*/
+                    hintText: 'Enter Your Task Description',
+                    hintStyle: TextStyle(
+                      color: provider.isDark() ? Colors.white : Colors.black,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: mediaQuery.height * 0.001,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Select Time :",
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                        color: provider.isDark() ? Colors.white : Colors.black,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        selectDateTime();
+                      },
+                      child: Text(
+                        (DateFormat.yMMMEd().format(selectedDate)),
+                        //"${selectedDate.day} - ${selectedDate.month} - ${selectedDate.year}",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: AppTheme.primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryColor,
+                  ),
+                  onPressed: () {
+                    addTask();
+                  },
+                  child: Text(
+                    "Add Task",
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -219,6 +244,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         title: titleController.text,
         description: descriptionController.text,
         isDone: false,
+        //dateTime: selectedDate.millisecondsSinceEpoch,
         dateTime: MyDateTime.externalDateOnly(selectedDate),
       );
 
