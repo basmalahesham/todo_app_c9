@@ -211,7 +211,7 @@ class _EditScreenState extends State<EditScreen> {
                     color: provider.isDark() ? Colors.white : Colors.black,
                   ),
                 ),
-                InkWell(
+                /*InkWell(
                   onTap: () {
                     selectDateTime();
                   },
@@ -225,14 +225,17 @@ class _EditScreenState extends State<EditScreen> {
                       color: AppTheme.primaryColor,
                     ),
                   ),
-                ),
-                /*InkWell(
+                ),*/
+                InkWell(
                   onTap: () async {
                     selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.fromMillisecondsSinceEpoch(args.dateTime!),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime.now().add(Duration(days: 365))) ?? DateTime.now();
+                            context: context,
+                            initialDate: DateTime.fromMillisecondsSinceEpoch(
+                                args.dateTime!),
+                            firstDate: DateTime.now(),
+                            lastDate:
+                                DateTime.now().add(Duration(days: 365))) ??
+                        DateTime.now();
                     setState(() {
                       args.dateTime = selectedDate.millisecondsSinceEpoch;
                     });
@@ -247,7 +250,7 @@ class _EditScreenState extends State<EditScreen> {
                       color: AppTheme.primaryColor,
                     ),
                   ),
-                ),*/
+                ),
                 SizedBox(
                   height: mediaQuery.height * 0.08,
                 ),
@@ -277,7 +280,7 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 
-  selectDateTime() async {
+/*selectDateTime() async {
     // select date
     // day month year
     var currentDate = await showDatePicker(
@@ -293,5 +296,5 @@ class _EditScreenState extends State<EditScreen> {
     }
     selectedDate = currentDate;
     setState(() {});
-  }
+  }*/
 }

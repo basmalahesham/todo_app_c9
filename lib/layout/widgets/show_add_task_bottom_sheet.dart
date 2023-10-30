@@ -244,8 +244,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         title: titleController.text,
         description: descriptionController.text,
         isDone: false,
+        dateTime:
+            (MyDateTime.externalDateOnly(selectedDate)).millisecondsSinceEpoch,
         //dateTime: selectedDate.millisecondsSinceEpoch,
-        dateTime: MyDateTime.externalDateOnly(selectedDate),
+        //dateTime: MyDateTime.externalDateOnly(selectedDate),
       );
 
       try {

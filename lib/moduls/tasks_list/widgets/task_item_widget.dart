@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/core/network_layer/firestore_utils.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -21,6 +22,8 @@ class TaskItemWidget extends StatefulWidget {
 }
 
 class _TaskItemWidgetState extends State<TaskItemWidget> {
+  DateTime selectedDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<SettingsProvider>(context);
@@ -52,7 +55,7 @@ class _TaskItemWidgetState extends State<TaskItemWidget> {
               label: 'Delete',
             ),
             SlidableAction(
-                // borderRadius: BorderRadius.circular(15),
+              // borderRadius: BorderRadius.circular(15),
                 backgroundColor: AppTheme.primaryColor,
                 foregroundColor: Colors.white,
                 icon: Icons.edit,
@@ -130,7 +133,7 @@ class _TaskItemWidgetState extends State<TaskItemWidget> {
                         width: 4,
                       ),
                       Text(
-                        widget.model.dateTime.toString(),
+                        (DateFormat.yMMMEd().format(selectedDate)),
                         style: GoogleFonts.roboto(
                           color:
                               provider.isDark() ? Colors.white : Colors.black,
@@ -150,27 +153,27 @@ class _TaskItemWidgetState extends State<TaskItemWidget> {
                 },
                 child: widget.model.isDone!
                     ? Text(
-                        'Done!',
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                        ),
-                      )
+                  'Done!',
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                )
                     : Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: AppTheme.primaryColor,
-                        ),
-                        child: Icon(
-                          Icons.check,
-                          size: 40,
-                          color: Colors.white,
-                        ),
-                      ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: AppTheme.primaryColor,
+                  ),
+                  child: Icon(
+                    Icons.check,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ],
           ),

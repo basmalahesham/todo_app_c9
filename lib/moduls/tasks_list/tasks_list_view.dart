@@ -65,6 +65,7 @@ class _TasksListViewState extends State<TasksListView> {
             stream: FirestoreUtils.getRealTimeDataFromFirestore(selectedDate),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
+                print(snapshot.error);
                 return Text('Error Eccoured');
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(

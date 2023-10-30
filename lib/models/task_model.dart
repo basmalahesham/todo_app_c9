@@ -4,8 +4,9 @@ class TaskModel {
   String? title;
   String? description;
   bool? isDone;
-  //int? dateTime;
-  DateTime? dateTime;
+  int? dateTime;
+
+  //DateTime? dateTime;
 
   TaskModel(
       {this.id, this.title, this.description, this.isDone, this.dateTime});
@@ -16,8 +17,8 @@ class TaskModel {
           title: json['title'],
           description: json['description'],
           isDone: json['isDone'],
-          //dateTime: json['dateTime'],
-          dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
+          dateTime: json['dateTime'],
+          //dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
         );
 
   Map<String, dynamic> toFireStore() {
@@ -26,8 +27,8 @@ class TaskModel {
       'title': title,
       'description': description,
       'isDone': isDone,
-      //'dateTime': dateTime,
-      'dateTime': dateTime?.millisecondsSinceEpoch,
+      'dateTime': dateTime,
+      //'dateTime': dateTime?.millisecondsSinceEpoch,
     };
   }
 }
